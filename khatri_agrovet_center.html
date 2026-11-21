@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KHATRI AgroVet Center — Retail & Inventory Manager (NPR 5L)</title>
+  <!-- Crisp SVG Favicon matching KHATRI AgroVet Center Logo (Leaf Wrap + Vet Cross + Livestock Silhouettes) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='26' fill='%23ffffff'/%3E%3Cpath d='M62 12 C34 12 16 32 16 60 C16 86 35 106 61 108 C85 110 104 91 104 65 C104 42 88 23 66 20 L63 28 C81 31 94 46 94 65 C94 85 79 99 60 98 C39 97 26 80 26 59 C26 42 36 27 52 20 C44 26 36 36 33 48 C47 46 56 36 62 12 Z' fill='%2365a30d'/%3E%3Cpath d='M25 63 C25 86 42 104 64 104 C85 104 101 88 103 68 C98 85 83 96 65 96 C45 96 31 81 29 63 Z' fill='%231e3315'/%3E%3Crect x='51' y='34' width='22' height='54' rx='4' fill='%231e3315'/%3E%3Crect x='35' y='50' width='54' height='22' rx='4' fill='%231e3315'/%3E%3Cpath d='M51 34 H62 V88 H51 Z' fill='%2365a30d'/%3E%3Cpath d='M35 50 H51 V72 H35 Z' fill='%2365a30d'/%3E%3Cpath d='M35 56 C40 54 45 55 48 58 L54 51 L57 54 L63 50 L63 55 C68 57 72 60 72 64 C72 67 68 68 63 68 L58 73 C64 73 69 76 69 81 C69 84 65 85 61 85 L59 88 H47 C47 82 50 76 55 74 L49 69 C45 71 42 74 41 79 H35 Z' fill='%23ffffff'/%3E%3C/svg%3E" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serifLogo: ['Merriweather', 'serif'],
+          },
+          colors: {
+            agro: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @media print {
+      body * { visibility: hidden; }
+      #printable-receipt, #printable-receipt * { visibility: visible; }
+      #printable-receipt {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: #fff !important;
+        color: #000 !important;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- Reusable SVG Symbol Definition for KHATRI AgroVet Center Emblem -->
+  <svg width="0" height="0" class="hidden" aria-hidden="true">
+    <defs>
+      <g id="khatri-agrovet-emblem">
+        <!-- Outer Leaf & Circular Sweep -->
+        <path d="M62 10 C32 10 14 31 14 60 C14 88 34 108 61 110 C86 112 106 92 106 65 C106 41 89 21 66 18 L63 27 C82 30 96 46 96 65 C96 86 80 101 60 100 C38 99 24 81 24 59 C24 41 35 25 52 18 C43 24 35 35 32 48 C46 46 56 35 62 10 Z" fill="#65a30d"/>
+        <!-- Dark Inner Crescent Accent -->
+        <path d="M23 63 C23 87 41 106 64 106 C86 106 103 89 105 68 C100 86 84 98 65 98 C44 98 29 82 27 63 Z" fill="#1e3315"/>
+        <!-- Veterinary Cross Base (Dark Forest Green) -->
+        <rect x="50" y="33" width="24" height="56" rx="4" fill="#1e3315"/>
+        <rect x="34" y="49" width="56" height="24" rx="4" fill="#1e3315"/>
+        <!-- Two-Tone Lime Green Left Shading on Cross -->
+        <path d="M50 33 H62 V89 H50 Z" fill="#65a30d"/>
+        <path d="M34 49 H50 V73 H34 Z" fill="#65a30d"/>
+        <!-- White Livestock Silhouettes (Calf, Cow & Sheep) inside Cross -->
+        <path d="M34 56 C39 54 44 55 47 58 L53 50 L56 54 L63 49 L63 55 C68 57 73 60 73 64 C73 67 69 69 63 69 L58 74 C65 74 70 77 70 82 C70 85 66 87 62 87 L60 89 H46 C46 83 49 77 55 75 L48 70 C44 72 41 75 40 80 H34 Z" fill="#ffffff"/>
+        <!-- Dark Calf Profile Accent -->
+        <path d="M34 61 L39 59 L42 61 C44 62 46 64 46 66 C46 68 44 69 41 69 L39 73 H34 Z" fill="#2e5a1c"/>
+        <!-- Sheep Ear Accent -->
+        <ellipse cx="60" cy="79" rx="2.2" ry="3.2" transform="rotate(-25 60 79)" fill="#1e3315"/>
+      </g>
+    </defs>
+  </svg>
+
+  <!-- Top Navigation Header -->
+  <header class="bg-agro-900 text-white shadow-md sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Brand Logo & Title (Matching 12_2.png on Clean White Badge) -->
+        <div class="flex items-center gap-3">
+          <div class="bg-white px-2.5 py-1.5 rounded-xl flex items-center gap-2.5 shadow-sm border border-agro-100">
+            <svg viewBox="0 0 120 120" class="w-9 h-9 shrink-0" role="img" aria-label="KHATRI AgroVet Center Logo">
+              <use href="#khatri-agrovet-emblem" />
+            </svg>
+            <div class="leading-none pr-1">
+              <div class="font-serifLogo font-black text-sm sm:text-base tracking-tight text-[#1e3315]">KHATRI</div>
+              <div class="text-[11px] sm:text-xs font-extrabold tracking-tight">
+                <span class="text-[#2e7d18]">Agro</span><span class="text-[#1e293b]">Vet Center</span>
+              </div>
+            </div>
+          </div>
+          <div class="hidden xl:block border-l border-agro-700 pl-3">
+            <p class="text-xs text-agro-100 font-medium">NPR 5 Lakh Capital &amp; Retail Suite</p>
+            <p class="text-[11px] text-agro-200/80">Seeds • Livestock Feed • Veterinary Care</p>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation Tabs -->
+        <nav class="hidden md:flex items-center gap-1.5" id="desktop-nav">
+          <button onclick="switchTab('dashboard')" data-tab="dashboard" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-semibold bg-agro-700 text-white transition">
+            Dashboard
+          </button>
+          <button onclick="switchTab('inventory')" data-tab="inventory" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium text-agro-100 hover:bg-agro-800 transition">
+            Inventory (5L)
+          </button>
+          <button onclick="switchTab('pos')" data-tab="pos" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium text-agro-100 hover:bg-agro-800 transition">
+            POS Billing
+          </button>
+          <button onclick="switchTab('farmers')" data-tab="farmers" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-medium text-agro-100 hover:bg-agro-800 transition">
+            Udhaar &amp; Advisory
+          </button>
+        </nav>
+
+        <!-- Capital Badge & Mobile Menu Button -->
+        <div class="flex items-center gap-2">
+          <span id="sync-status-badge" class="hidden sm:inline-flex items-center gap-1.5 bg-agro-800 border border-agro-700 px-3 py-1.5 rounded-full text-xs font-semibold text-agro-100" title="Live Cloud & Offline Sync Status">
+            <span id="sync-dot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="sync-label">Live Sync</span> • <span id="header-stock-val">NPR 5,00,450</span>
+          </span>
+          <button onclick="openBackupModal()" class="hidden sm:inline-flex items-center gap-1 bg-agro-800 hover:bg-agro-700 border border-agro-700 px-2.5 py-1.5 rounded-xl text-xs font-semibold text-agro-100 transition" title="Daily Backup & Shop Sync">
+            <span>Backup / Sync</span>
+          </button>
+          <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-agro-100 hover:bg-agro-800 focus:outline-none" aria-label="Toggle Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation -->
+    <div id="mobile-menu" class="hidden md:hidden bg-agro-800 px-4 pt-3 pb-4 space-y-2 border-t border-agro-700">
+      <div class="flex items-center justify-between bg-white/95 px-3 py-2 rounded-xl mb-2">
+        <div class="flex items-center gap-2.5">
+          <svg viewBox="0 0 120 120" class="w-8 h-8 shrink-0">
+            <use href="#khatri-agrovet-emblem" />
+          </svg>
+          <div class="leading-tight">
+            <div class="font-serifLogo font-black text-xs text-[#1e3315]">KHATRI</div>
+            <div class="text-[11px] font-extrabold"><span class="text-[#2e7d18]">Agro</span><span class="text-[#1e293b]">Vet Center</span></div>
+          </div>
+        </div>
+        <button onclick="openBackupModal(); toggleMobileMenu()" class="px-2.5 py-1 bg-agro-100 text-agro-900 rounded-lg text-xs font-bold">Sync / Backup</button>
+      </div>
+      <button onclick="switchTab('dashboard'); toggleMobileMenu()" data-tab="dashboard" class="nav-btn block w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold bg-agro-700 text-white">Dashboard</button>
+      <button onclick="switchTab('inventory'); toggleMobileMenu()" data-tab="inventory" class="nav-btn block w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-agro-100">Inventory (NPR 5L)</button>
+      <button onclick="switchTab('pos'); toggleMobileMenu()" data-tab="pos" class="nav-btn block w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-agro-100">POS Billing Counter</button>
+      <button onclick="switchTab('farmers'); toggleMobileMenu()" data-tab="farmers" class="nav-btn block w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-agro-100">Udhaar &amp; Farmer Advisory</button>
+    </div>
+  </header>
+
+  <!-- Toast Notification Banner -->
+  <div id="toast-banner" class="hidden fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg flex items-center gap-3 text-sm font-medium border border-slate-700">
+    <span id="toast-icon" class="text-emerald-400 font-bold">✓</span>
+    <span id="toast-message">Action completed</span>
+  </div>
+
+  <!-- Main Content Container -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- ==================== TAB 1: DASHBOARD ==================== -->
+    <section id="tab-dashboard" class="space-y-6">
+      <!-- KPI Summary Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80">
+          <div class="flex items-center justify-between">
+            <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Inventory Value</p>
+            <span class="p-2 bg-agro-50 text-agro-700 rounded-lg text-xs font-bold">5L Capital</span>
+          </div>
+          <p id="kpi-total-value" class="text-2xl font-extrabold text-slate-900 mt-2">NPR 5,00,450</p>
+          <p class="text-xs text-emerald-600 font-medium mt-1">Target Base: NPR 5,00,000</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80">
+          <div class="flex items-center justify-between">
+            <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Today's Counter Sales</p>
+            <span class="p-2 bg-blue-50 text-blue-700 rounded-lg text-xs font-bold">POS</span>
+          </div>
+          <p id="kpi-today-sales" class="text-2xl font-extrabold text-slate-900 mt-2">NPR 14,850</p>
+          <p id="kpi-bill-count" class="text-xs text-slate-500 font-medium mt-1">6 Bills Processed Today</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80">
+          <div class="flex items-center justify-between">
+            <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Low Stock Alerts</p>
+            <span class="p-2 bg-amber-50 text-amber-700 rounded-lg text-xs font-bold">Reorder</span>
+          </div>
+          <p id="kpi-low-stock" class="text-2xl font-extrabold text-amber-600 mt-2">2 Items</p>
+          <p class="text-xs text-slate-500 font-medium mt-1">Below minimum threshold</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80">
+          <div class="flex items-center justify-between">
+            <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Pending Farmer Udhaar</p>
+            <span class="p-2 bg-rose-50 text-rose-700 rounded-lg text-xs font-bold">Credit</span>
+          </div>
+          <p id="kpi-udhaar-total" class="text-2xl font-extrabold text-rose-600 mt-2">NPR 18,400</p>
+          <p id="kpi-udhaar-count" class="text-xs text-slate-500 font-medium mt-1">Across 3 active farmers</p>
+        </div>
+      </div>
+
+      <!-- Daily Closing / Day-End Cash Register Summary -->
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">Daily Closing &amp; Cash Register Summary (<span id="closing-date-label">Today</span>)</h2>
+            <p class="text-xs text-slate-500">Verify counter cash-in-hand, eSewa/Fonepay QR receipts, and credit billed today</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="exportDailyBackup()" class="px-3 py-1.5 bg-agro-50 hover:bg-agro-100 text-agro-800 text-xs font-bold rounded-lg border border-agro-200 transition">
+              Download Day-End JSON
+            </button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between">
+            <div>
+              <p class="text-[11px] font-bold uppercase text-emerald-800">Cash in Drawer (Today)</p>
+              <p id="closing-cash-sales" class="text-xl font-extrabold text-emerald-950 mt-0.5">NPR 9,250</p>
+            </div>
+            <span class="px-2.5 py-1 bg-emerald-600 text-white text-[11px] font-bold rounded-lg">CASH</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-sky-50/70 border border-sky-200 flex items-center justify-between">
+            <div>
+              <p class="text-[11px] font-bold uppercase text-sky-800">eSewa / Fonepay QR</p>
+              <p id="closing-qr-sales" class="text-xl font-extrabold text-sky-950 mt-0.5">NPR 5,600</p>
+            </div>
+            <span class="px-2.5 py-1 bg-sky-600 text-white text-[11px] font-bold rounded-lg">DIGITAL QR</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-amber-50/70 border border-amber-200 flex items-center justify-between">
+            <div>
+              <p class="text-[11px] font-bold uppercase text-amber-800">Udhaar Billed Today</p>
+              <p id="closing-udhaar-sales" class="text-xl font-extrabold text-amber-950 mt-0.5">NPR 0</p>
+            </div>
+            <span class="px-2.5 py-1 bg-amber-600 text-white text-[11px] font-bold rounded-lg">CREDIT</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 Lakh Capital Breakdown & Expiry Alerts -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Category Allocation -->
+        <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+            <div>
+              <h2 class="text-lg font-bold text-slate-900">NPR 5 Lakh Stock Allocation by Category</h2>
+              <p class="text-xs text-slate-500">Live valuation across veterinary, feed, crop seeds, and agro-tools</p>
+            </div>
+            <button onclick="switchTab('inventory')" class="text-xs font-semibold text-agro-700 hover:text-agro-800 bg-agro-50 px-3 py-1.5 rounded-lg">
+              Manage Stock →
+            </button>
+          </div>
+          <div id="category-breakdown" class="space-y-4"></div>
+        </div>
+
+        <!-- Expiry & Reorder Priority Box -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900 mb-1">Priority Stock &amp; Expiry Watch</h2>
+            <p class="text-xs text-slate-500 mb-4">Items needing quick sale or supplier restock</p>
+            <div id="priority-alerts-list" class="space-y-3"></div>
+          </div>
+          <button onclick="switchTab('pos')" class="mt-5 w-full py-2.5 px-4 bg-agro-700 hover:bg-agro-800 text-white text-sm font-semibold rounded-xl transition">
+            Open Quick Billing Counter
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 2: INVENTORY (5L) ==================== -->
+    <section id="tab-inventory" class="hidden space-y-5">
+      <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900">KHATRI AgroVet Inventory Catalog</h2>
+          <p class="text-xs text-slate-500">Track batch numbers, expiry dates, wholesale stock value, and quick restocking</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2.5">
+          <input type="text" id="inv-search" oninput="renderInventory()" placeholder="Search medicine, seed, feed..." class="px-3.5 py-2 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-agro-600 w-full sm:w-60" />
+          <select id="inv-category-filter" onchange="renderInventory()" class="px-3.5 py-2 text-sm border border-slate-300 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-agro-600">
+            <option value="ALL">All Categories</option>
+            <option value="Veterinary Medicine">Veterinary Medicine</option>
+            <option value="Livestock & Poultry Feed">Livestock &amp; Poultry Feed</option>
+            <option value="Seeds & Fertilizers">Seeds &amp; Fertilizers</option>
+            <option value="Agro-Tools & Sprayers">Agro-Tools &amp; Sprayers</option>
+          </select>
+          <button onclick="openAddModal()" class="px-4 py-2 bg-agro-700 hover:bg-agro-800 text-white text-sm font-semibold rounded-xl transition">
+            + Add New Batch
+          </button>
+        </div>
+      </div>
+
+      <!-- Inventory Table -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-100 text-slate-600 text-xs uppercase tracking-wider border-b border-slate-200">
+                <th class="py-3.5 px-4 font-bold">Product &amp; Batch</th>
+                <th class="py-3.5 px-4 font-bold">Category</th>
+                <th class="py-3.5 px-4 font-bold">Unit Price</th>
+                <th class="py-3.5 px-4 font-bold">In Stock</th>
+                <th class="py-3.5 px-4 font-bold">Stock Value</th>
+                <th class="py-3.5 px-4 font-bold">Expiry</th>
+                <th class="py-3.5 px-4 font-bold text-right">Quick Restock</th>
+              </tr>
+            </thead>
+            <tbody id="inventory-tbody" class="divide-y divide-slate-100 text-sm"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: POS BILLING COUNTER ==================== -->
+    <section id="tab-pos" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <!-- Left: Product Picker -->
+      <div class="lg:col-span-7 space-y-4">
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/80">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <h2 class="text-lg font-bold text-slate-900">Select Items for Farmer Bill</h2>
+            <input type="text" id="pos-search" oninput="renderPosGrid()" placeholder="Filter products..." class="px-3.5 py-2 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-agro-600 w-full sm:w-56" />
+          </div>
+          <div id="pos-product-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[520px] overflow-y-auto pr-1"></div>
+        </div>
+      </div>
+
+      <!-- Right: Current Cart & Receipt Generator -->
+      <div class="lg:col-span-5">
+        <div id="printable-receipt" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 space-y-4">
+          <!-- Receipt Header with KHATRI AgroVet Center Emblem -->
+          <div class="border-b border-dashed border-slate-300 pb-3 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <svg viewBox="0 0 120 120" class="w-10 h-10 shrink-0">
+                <use href="#khatri-agrovet-emblem" />
+              </svg>
+              <div>
+                <h3 class="font-serifLogo font-black text-base text-[#1e3315] leading-tight">KHATRI <span class="font-sans font-extrabold text-[#2e7d18]">Agro</span><span class="font-sans font-extrabold text-[#1e293b]">Vet Center</span></h3>
+                <p class="text-[11px] text-slate-500">PAN: 609842315 • Bheriganga-9, Jahare Bazzar, Surkhet</p>
+              </div>
+            </div>
+            <span id="receipt-bill-no" class="text-xs font-mono font-bold bg-slate-100 px-2.5 py-1 rounded-lg text-slate-700">#KAV-107</span>
+          </div>
+
+          <!-- Customer Inputs -->
+          <div class="grid grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-500 uppercase mb-1">Farmer / Customer</label>
+              <input type="text" id="pos-customer-name" list="farmer-suggestions" placeholder="Farmer Name" value="Ramesh Thapa (Walk-in)" class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-agro-600" />
+              <datalist id="farmer-suggestions"></datalist>
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-500 uppercase mb-1">Phone &amp; Payment</label>
+              <div class="flex gap-1.5">
+                <input type="text" id="pos-customer-phone" placeholder="98XXXXXXXX" class="w-1/2 px-2.5 py-1.5 text-xs border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-agro-600" />
+                <select id="pos-payment-mode" class="w-1/2 px-2 py-1.5 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-agro-600">
+                  <option value="Cash">Cash (NPR)</option>
+                  <option value="eSewa / Fonepay QR">eSewa / QR</option>
+                  <option value="Udhaar (Credit)">Udhaar</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cart Items -->
+          <div class="border-t border-b border-slate-200 py-3 min-h-[160px] max-h-[240px] overflow-y-auto space-y-2.5" id="pos-cart-items">
+            <p class="text-sm text-slate-400 text-center py-10">Tap products on the left to add to bill</p>
+          </div>
+
+          <!-- Totals -->
+          <div class="space-y-1.5 text-sm">
+            <div class="flex justify-between text-slate-600">
+              <span>Subtotal</span>
+              <span id="pos-subtotal">NPR 0</span>
+            </div>
+            <div class="flex justify-between text-slate-600">
+              <span>Agri-Input VAT (0% Exempt)</span>
+              <span>NPR 0</span>
+            </div>
+            <div class="flex justify-between text-base font-extrabold text-slate-900 pt-1.5 border-t border-slate-200">
+              <span>Grand Total</span>
+              <span id="pos-grand-total" class="text-agro-800">NPR 0</span>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="grid grid-cols-2 gap-2.5 pt-2">
+            <button onclick="window.print()" class="py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-semibold rounded-xl transition">
+              Print Receipt
+            </button>
+            <button onclick="checkoutBill()" class="py-2.5 px-4 bg-agro-700 hover:bg-agro-800 text-white text-sm font-semibold rounded-xl transition shadow-sm">
+              Complete Sale
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 4: UDHAAR & FARMER ADVISORY ==================== -->
+    <section id="tab-farmers" class="hidden grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Udhaar Credit Ledger -->
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900">Farmer Udhaar (Credit) Ledger</h2>
+            <p class="text-xs text-slate-500">Track seasonal credit given for seeds, feed &amp; vet care</p>
+          </div>
+          <span id="ledger-badge-total" class="px-3 py-1 bg-rose-50 text-rose-700 text-xs font-bold rounded-full">Due: NPR 18,400</span>
+        </div>
+        <div id="udhaar-list" class="space-y-3"></div>
+      </div>
+
+      <!-- Veterinary & Crop Advisory Log -->
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 space-y-4">
+        <div>
+          <h2 class="text-lg font-bold text-slate-900">Vet Dosage &amp; Crop Advisory Log</h2>
+          <p class="text-xs text-slate-500">Record field recommendations for livestock &amp; seasonal crops</p>
+        </div>
+        <form onsubmit="addAdvisoryNote(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+          <input type="text" id="adv-farmer" required placeholder="Farmer Name & Village" class="px-3 py-2 text-sm border border-slate-300 rounded-lg bg-white" />
+          <input type="text" id="adv-issue" required placeholder="Case (e.g., Cattle Deworming)" class="px-3 py-2 text-sm border border-slate-300 rounded-lg bg-white" />
+          <input type="text" id="adv-rx" required placeholder="Prescribed Medicine / Seed & Dose" class="sm:col-span-2 px-3 py-2 text-sm border border-slate-300 rounded-lg bg-white" />
+          <button type="submit" class="sm:col-span-2 py-2 bg-agro-700 hover:bg-agro-800 text-white text-sm font-semibold rounded-lg transition">
+            Save Advisory Record
+          </button>
+        </form>
+        <div id="advisory-list" class="space-y-2.5 max-h-[300px] overflow-y-auto"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Add New Stock Batch Modal -->
+  <div id="add-stock-modal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-lg font-bold text-slate-900">Add New Stock Batch</h3>
+        <button onclick="closeAddModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold">&times;</button>
+      </div>
+      <form onsubmit="saveNewBatch(event)" class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Product Name</label>
+          <input type="text" id="new-name" required placeholder="e.g., Albendazole 3000mg Bolus" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Category</label>
+            <select id="new-category" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl bg-white">
+              <option value="Veterinary Medicine">Veterinary Medicine</option>
+              <option value="Livestock & Poultry Feed">Livestock &amp; Poultry Feed</option>
+              <option value="Seeds & Fertilizers">Seeds &amp; Fertilizers</option>
+              <option value="Agro-Tools & Sprayers">Agro-Tools &amp; Sprayers</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Batch No.</label>
+            <input type="text" id="new-batch" required placeholder="B-2026-09" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl" />
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Rate (NPR)</label>
+            <input type="number" id="new-price" required min="1" placeholder="450" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Quantity</label>
+            <input type="number" id="new-qty" required min="1" placeholder="20" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Expiry Date</label>
+            <input type="date" id="new-expiry" required value="2027-06-30" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl" />
+          </div>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeAddModal()" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-xl">Cancel</button>
+          <button type="submit" class="px-4 py-2 text-sm font-semibold bg-agro-700 hover:bg-agro-800 text-white rounded-xl">Save to Inventory</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Existing Batch / Price Modal -->
+  <div id="edit-stock-modal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-lg font-bold text-slate-900">Edit Item Details</h3>
+        <button onclick="closeEditModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold">&times;</button>
+      </div>
+      <form onsubmit="saveEditedBatch(event)" class="space-y-3">
+        <input type="hidden" id="edit-id" />
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Product Name</label>
+          <input type="text" id="edit-name" required class="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Batch No.</label>
+            <input type="text" id="edit-batch" required class="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Expiry Date</label>
+            <input type="date" id="edit-expiry" required class="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Selling Rate (NPR)</label>
+            <input type="number" id="edit-price" required min="1" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Current Stock Qty</label>
+            <input type="number" id="edit-qty" required min="0" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl" />
+          </div>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeEditModal()" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-xl">Cancel</button>
+          <button type="submit" class="px-4 py-2 text-sm font-semibold bg-agro-700 hover:bg-agro-800 text-white rounded-xl">Update Item</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Shared Shop Sync & Backup Modal -->
+  <div id="backup-modal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="text-lg font-bold text-slate-900">Shop Multi-Device Sync &amp; Daily Backup</h3>
+          <p class="text-xs text-slate-500">KHATRI AgroVet Center • Bheriganga-9, Jahare Bazzar, Surkhet</p>
+        </div>
+        <button onclick="closeBackupModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold">&times;</button>
+      </div>
+
+      <div class="p-4 rounded-xl bg-agro-50 border border-agro-200 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold uppercase text-agro-900">Shared Shop Room PIN</span>
+          <span id="cloud-conn-pill" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800">Ready</span>
+        </div>
+        <p class="text-xs text-slate-600">Enter the same Shop PIN on your phone, tablet, or shop laptop so you and your brother share the exact same live stock &amp; Udhaar ledger.</p>
+        <div class="flex gap-2 pt-1">
+          <input type="text" id="shop-pin-input" value="KHATRI-SURKHET-5L" class="flex-1 px-3 py-2 text-sm font-mono font-bold border border-agro-300 rounded-xl bg-white" />
+          <button onclick="connectShopRoom()" class="px-4 py-2 bg-agro-700 hover:bg-agro-800 text-white text-xs font-bold rounded-xl transition">Sync Room</button>
+        </div>
+        <p id="active-user-uid" class="text-[11px] font-mono text-slate-500 break-all pt-1"></p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+        <button onclick="exportDailyBackup()" class="p-3.5 rounded-xl border border-slate-200 hover:border-agro-600 hover:bg-slate-50 text-left transition">
+          <p class="text-sm font-bold text-slate-900">Export JSON Backup</p>
+          <p class="text-xs text-slate-500 mt-0.5">Save today's inventory, sales &amp; Udhaar file to device</p>
+        </button>
+        <label class="p-3.5 rounded-xl border border-slate-200 hover:border-agro-600 hover:bg-slate-50 text-left transition cursor-pointer">
+          <p class="text-sm font-bold text-slate-900">Restore JSON Backup</p>
+          <p class="text-xs text-slate-500 mt-0.5">Load a previously exported shop backup file</p>
+          <input type="file" accept=".json" onchange="importDailyBackup(event)" class="hidden" />
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // Default NPR 5,00,450 Inventory Dataset for KHATRI AgroVet Center
+    const DEFAULT_INVENTORY = [
+      { id: 1, name: "Ivermectin Injection 100ml", category: "Veterinary Medicine", batch: "VET-401", price: 650, qty: 85, minQty: 20, expiry: "2027-04-15" },
+      { id: 2, name: "Calcium & Mineral Bolus (Pack of 20)", category: "Veterinary Medicine", batch: "VET-412", price: 480, qty: 120, minQty: 25, expiry: "2027-08-20" },
+      { id: 3, name: "Oxytetracycline LA 50ml", category: "Veterinary Medicine", batch: "VET-389", price: 420, qty: 14, minQty: 20, expiry: "2026-12-28" },
+      { id: 4, name: "Poultry Liver Tonic & Vitamin (1L)", category: "Veterinary Medicine", batch: "VET-425", price: 550, qty: 90, minQty: 15, expiry: "2027-05-10" },
+      { id: 5, name: "Dairy Cattle Pellet Feed (50kg Bag)", category: "Livestock & Poultry Feed", batch: "FD-108", price: 2450, qty: 65, minQty: 15, expiry: "2027-02-18" },
+      { id: 6, name: "Broiler Starter Crumbs (50kg Bag)", category: "Livestock & Poultry Feed", batch: "FD-114", price: 3200, qty: 30, minQty: 10, expiry: "2027-01-30" },
+      { id: 7, name: "Hybrid Maize Seed (5kg Pack)", category: "Seeds & Fertilizers", batch: "SD-902", price: 1450, qty: 40, minQty: 12, expiry: "2026-12-19" },
+      { id: 8, name: "Micronutrient Foliar Spray (500ml)", category: "Seeds & Fertilizers", batch: "SD-918", price: 520, qty: 50, minQty: 15, expiry: "2027-09-01" },
+      { id: 9, name: "16L Battery Knapsack Sprayer", category: "Agro-Tools & Sprayers", batch: "TL-204", price: 4200, qty: 8, minQty: 10, expiry: "2030-12-31" },
+      { id: 10, name: "Automatic Poultry Drinker & Feeder Set", category: "Agro-Tools & Sprayers", batch: "TL-211", price: 380, qty: 35, minQty: 10, expiry: "2030-12-31" }
+    ];
+
+    const DEFAULT_UDHAAR = [
+      { id: 1, farmer: "Hari Bahadur Gurung", phone: "9848011223", village: "Bheriganga-9, Jahare", amount: 8200, items: "3x Dairy Feed Bags, Calcium Bolus", dueDate: "2026-12-05" },
+      { id: 2, farmer: "Sita Devi Adhikari", phone: "9868122334", village: "Bheriganga-8, Chhinchu", amount: 5400, items: "Hybrid Maize Seeds, Micronutrient Spray", dueDate: "2026-12-12" },
+      { id: 3, farmer: "Bikash Chaudhary", phone: "9812533445", village: "Bheriganga-10, Surkhet", amount: 4800, items: "Poultry Liver Tonic, Broiler Crumbs", dueDate: "2026-12-15" }
+    ];
+
+    const DEFAULT_ADVISORY = [
+      { farmer: "Ramesh Thapa (Jahare Bazzar)", issue: "Lactating Cow Milk Drop", rx: "Calcium Bolus 2/day for 10 days + Mineral Mixture 50g daily", date: "Today, 09:40 AM" },
+      { farmer: "Sita Devi Adhikari (Chhinchu)", issue: "Winter Maize Germination", rx: "Seed treatment before sowing + Zinc Sulphate basal dose", date: "Yesterday" }
+    ];
+
+    let inventory = JSON.parse(JSON.stringify(DEFAULT_INVENTORY));
+    let udhaarLedger = JSON.parse(JSON.stringify(DEFAULT_UDHAAR));
+    let advisoryLogs = JSON.parse(JSON.stringify(DEFAULT_ADVISORY));
+    let cart = [];
+    let dailyStats = {
+      date: new Date().toISOString().slice(0, 10),
+      cashSales: 9250,
+      qrSales: 5600,
+      udhaarSales: 0,
+      billCount: 6,
+      nextBillNum: 107
+    };
+
+    // Firebase Cloud Sync Setup (Public Shared Shop State under /artifacts/{appId}/public/data/shopState)
+    let db = null;
+    let auth = null;
+    let currentUser = null;
+    let unsubscribeShop = null;
+    let shopPin = "KHATRI-SURKHET-5L";
+    const appId = typeof __app_id !== "undefined" ? __app_id : "khatri-agrovet-surkhet";
+
+    function updateSyncUI(statusText, isOnline) {
+      const label = document.getElementById("sync-label");
+      const dot = document.getElementById("sync-dot");
+      const pill = document.getElementById("cloud-conn-pill");
+      if (label) label.textContent = statusText;
+      if (dot) {
+        dot.className = isOnline
+          ? "w-2 h-2 rounded-full bg-emerald-400 animate-pulse"
+          : "w-2 h-2 rounded-full bg-amber-400";
+      }
+      if (pill) {
+        pill.textContent = statusText;
+        pill.className = isOnline
+          ? "px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800"
+          : "px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800";
+      }
+    }
+
+    async function persistShopState() {
+      // Always persist to Firestore when authenticated so Aayush & his brother stay synced live
+      if (!db || !currentUser) return;
+      try {
+        const sanitizedPin = shopPin.replace(/[^a-zA-Z0-9_-]/g, "_").toUpperCase() || "KHATRI_MAIN";
+        const shopDocRef = doc(db, "artifacts", appId, "public", "data", "shopRooms", sanitizedPin);
+        await setDoc(shopDocRef, {
+          inventoryJson: JSON.stringify(inventory),
+          udhaarJson: JSON.stringify(udhaarLedger),
+          advisoryJson: JSON.stringify(advisoryLogs),
+          dailyStatsJson: JSON.stringify(dailyStats),
+          updatedAt: new Date().toISOString(),
+          updatedBy: currentUser.uid
+        }, { merge: true });
+        updateSyncUI("Cloud Synced", true);
+      } catch (err) {
+        console.error("Cloud sync error:", err);
+        updateSyncUI("Offline Mode", false);
+      }
+    }
+
+    function subscribeToShopRoom() {
+      if (!db || !currentUser) return;
+      if (unsubscribeShop) unsubscribeShop();
+      const sanitizedPin = shopPin.replace(/[^a-zA-Z0-9_-]/g, "_").toUpperCase() || "KHATRI_MAIN";
+      const shopDocRef = doc(db, "artifacts", appId, "public", "data", "shopRooms", sanitizedPin);
+
+      unsubscribeShop = onSnapshot(shopDocRef, (snap) => {
+        if (snap.exists()) {
+          const data = snap.data();
+          try {
+            if (data.inventoryJson) inventory = JSON.parse(data.inventoryJson);
+            if (data.udhaarJson) udhaarLedger = JSON.parse(data.udhaarJson);
+            if (data.advisoryJson) advisoryLogs = JSON.parse(data.advisoryJson);
+            if (data.dailyStatsJson) {
+              const parsedStats = JSON.parse(data.dailyStatsJson);
+              const todayStr = new Date().toISOString().slice(0, 10);
+              if (parsedStats.date !== todayStr) {
+                dailyStats = { date: todayStr, cashSales: 0, qrSales: 0, udhaarSales: 0, billCount: 0, nextBillNum: parsedStats.nextBillNum || 107 };
+              } else {
+                dailyStats = parsedStats;
+              }
+            }
+            refreshAllViews();
+            updateSyncUI("Live Cloud Sync", true);
+          } catch (e) {
+            console.error("Error parsing synced shop data:", e);
+          }
+        } else {
+          // Initialize cloud room with baseline NPR 5L stock
+          persistShopState();
+        }
+      }, (error) => {
+        console.error("Snapshot listener error:", error);
+        updateSyncUI("Offline Mode", false);
+      });
+    }
+
+    async function initCloudSync() {
+      try {
+        if (typeof __firebase_config === "undefined") {
+          updateSyncUI("Local Session", false);
+          return;
+        }
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+        db = getFirestore(app);
+
+        if (typeof __initial_auth_token !== "undefined" && __initial_auth_token) {
+          await signInWithCustomToken(auth, __initial_auth_token);
+        } else {
+          await signInAnonymously(auth);
+        }
+
+        onAuthStateChanged(auth, (user) => {
+          currentUser = user;
+          if (user) {
+            const uidEl = document.getElementById("active-user-uid");
+            if (uidEl) uidEl.textContent = `Device ID: ${user.uid}`;
+            subscribeToShopRoom();
+          }
+        });
+      } catch (err) {
+        console.error("Firebase init failed, running in resilient offline mode:", err);
+        updateSyncUI("Offline Mode", false);
+      }
+    }
+
+    window.connectShopRoom = function() {
+      const val = document.getElementById("shop-pin-input").value.trim();
+      if (!val) return showToast("Enter a valid Shop PIN");
+      shopPin = val;
+      subscribeToShopRoom();
+      showToast(`Connected to Shop Room: ${shopPin}`);
+    };
+
+    window.openBackupModal = function() { document.getElementById("backup-modal").classList.remove("hidden"); };
+    window.closeBackupModal = function() { document.getElementById("backup-modal").classList.add("hidden"); };
+
+    window.exportDailyBackup = function() {
+      const payload = {
+        shop: "KHATRI AgroVet Center - Bheriganga-9, Jahare Bazzar, Surkhet",
+        exportedAt: new Date().toISOString(),
+        inventory,
+        udhaarLedger,
+        advisoryLogs,
+        dailyStats
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `KHATRI_AgroVet_Backup_${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast("Daily JSON backup downloaded");
+    };
+
+    window.importDailyBackup = function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (Array.isArray(parsed.inventory)) inventory = parsed.inventory;
+          if (Array.isArray(parsed.udhaarLedger)) udhaarLedger = parsed.udhaarLedger;
+          if (Array.isArray(parsed.advisoryLogs)) advisoryLogs = parsed.advisoryLogs;
+          if (parsed.dailyStats) dailyStats = parsed.dailyStats;
+          refreshAllViews();
+          await persistShopState();
+          closeBackupModal();
+          showToast("Shop backup restored & synced!");
+        } catch (err) {
+          showToast("Invalid backup JSON file");
+        }
+      };
+      reader.readAsText(file);
+    };
+
+    function formatNPR(num) {
+      return "NPR " + Number(num).toLocaleString("en-IN");
+    }
+
+    function showToast(msg) {
+      const banner = document.getElementById("toast-banner");
+      document.getElementById("toast-message").textContent = msg;
+      banner.classList.remove("hidden");
+      setTimeout(() => banner.classList.add("hidden"), 2800);
+    }
+
+    function refreshAllViews() {
+      renderDashboard();
+      renderInventory();
+      renderPosGrid();
+      renderFarmers();
+      document.getElementById("receipt-bill-no").textContent = `#KAV-${dailyStats.nextBillNum}`;
+      const datalist = document.getElementById("farmer-suggestions");
+      if (datalist) {
+        datalist.innerHTML = udhaarLedger.map(u => `<option value="${u.farmer}">`).join("");
+      }
+    }
+
+    window.switchTab = function(tabName) {
+      ["dashboard", "inventory", "pos", "farmers"].forEach(t => {
+        document.getElementById("tab-" + t).classList.add("hidden");
+      });
+      document.getElementById("tab-" + tabName).classList.remove("hidden");
+
+      document.querySelectorAll(".nav-btn").forEach(btn => {
+        if (btn.dataset.tab === tabName) {
+          btn.classList.add("bg-agro-700", "text-white", "font-semibold");
+          btn.classList.remove("text-agro-100");
+        } else {
+          btn.classList.remove("bg-agro-700", "text-white", "font-semibold");
+          btn.classList.add("text-agro-100");
+        }
+      });
+
+      if (tabName === "dashboard") renderDashboard();
+      if (tabName === "inventory") renderInventory();
+      if (tabName === "pos") renderPosGrid();
+      if (tabName === "farmers") renderFarmers();
+    };
+
+    window.toggleMobileMenu = function() {
+      document.getElementById("mobile-menu").classList.toggle("hidden");
+    };
+
+    window.renderDashboard = function() {
+      const totalVal = inventory.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const lowStockItems = inventory.filter(i => i.qty <= i.minQty);
+      const totalUdhaar = udhaarLedger.reduce((sum, u) => sum + u.amount, 0);
+      const totalTodaySales = dailyStats.cashSales + dailyStats.qrSales + dailyStats.udhaarSales;
+
+      document.getElementById("header-stock-val").textContent = formatNPR(totalVal);
+      document.getElementById("kpi-total-value").textContent = formatNPR(totalVal);
+      document.getElementById("kpi-today-sales").textContent = formatNPR(totalTodaySales);
+      document.getElementById("kpi-bill-count").textContent = `${dailyStats.billCount} Bills Processed Today`;
+      document.getElementById("kpi-low-stock").textContent = `${lowStockItems.length} Items`;
+      document.getElementById("kpi-udhaar-total").textContent = formatNPR(totalUdhaar);
+      document.getElementById("kpi-udhaar-count").textContent = `Across ${udhaarLedger.length} active farmers`;
+
+      document.getElementById("closing-date-label").textContent = dailyStats.date;
+      document.getElementById("closing-cash-sales").textContent = formatNPR(dailyStats.cashSales);
+      document.getElementById("closing-qr-sales").textContent = formatNPR(dailyStats.qrSales);
+      document.getElementById("closing-udhaar-sales").textContent = formatNPR(dailyStats.udhaarSales);
+
+      // Category Allocation Bars
+      const categories = ["Veterinary Medicine", "Livestock & Poultry Feed", "Seeds & Fertilizers", "Agro-Tools & Sprayers"];
+      const catColors = ["bg-emerald-600", "bg-amber-500", "bg-blue-600", "bg-purple-600"];
+      const breakdownEl = document.getElementById("category-breakdown");
+      breakdownEl.innerHTML = categories.map((cat, idx) => {
+        const catVal = inventory.filter(i => i.category === cat).reduce((s, i) => s + i.price * i.qty, 0);
+        const pct = totalVal > 0 ? Math.round((catVal / totalVal) * 100) : 0;
+        return `
+          <div>
+            <div class="flex justify-between text-sm font-semibold mb-1">
+              <span class="text-slate-700">${cat}</span>
+              <span class="text-slate-900">${formatNPR(catVal)} <span class="text-xs text-slate-400 font-normal">(${pct}%)</span></span>
+            </div>
+            <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+              <div class="${catColors[idx]} h-2.5 rounded-full" style="width: ${pct}%"></div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      // Priority Stock & Expiry Watch
+      const priorityEl = document.getElementById("priority-alerts-list");
+      const alerts = inventory.filter(i => i.qty <= i.minQty || i.expiry <= "2027-01-15");
+      priorityEl.innerHTML = alerts.map(item => {
+        const isLow = item.qty <= item.minQty;
+        return `
+          <div class="p-3 rounded-xl border ${isLow ? 'bg-amber-50/70 border-amber-200' : 'bg-rose-50/70 border-rose-200'} flex items-center justify-between gap-2">
+            <div>
+              <p class="text-xs font-bold text-slate-900">${item.name}</p>
+              <p class="text-[11px] text-slate-600">Batch: ${item.batch} • Exp: ${item.expiry}</p>
+            </div>
+            <span class="px-2 py-1 rounded-lg text-[11px] font-bold ${isLow ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800'}">
+              ${isLow ? `Only ${item.qty} left` : 'Expiring Soon'}
+            </span>
+          </div>
+        `;
+      }).join("") || `<p class="text-xs text-slate-400 py-4 text-center">All stock levels &amp; expiry dates healthy.</p>`;
+    };
+
+    window.renderInventory = function() {
+      const query = document.getElementById("inv-search").value.toLowerCase();
+      const cat = document.getElementById("inv-category-filter").value;
+      const filtered = inventory.filter(item => {
+        const matchesQuery = item.name.toLowerCase().includes(query) || item.batch.toLowerCase().includes(query);
+        const matchesCat = cat === "ALL" || item.category === cat;
+        return matchesQuery && matchesCat;
+      });
+
+      const tbody = document.getElementById("inventory-tbody");
+      tbody.innerHTML = filtered.map(item => {
+        const isLow = item.qty <= item.minQty;
+        return `
+          <tr class="hover:bg-slate-50/80 transition">
+            <td class="py-3.5 px-4">
+              <div class="font-semibold text-slate-900">${item.name}</div>
+              <div class="text-xs text-slate-400">Batch: ${item.batch}</div>
+            </td>
+            <td class="py-3.5 px-4 text-xs font-medium text-slate-600">${item.category}</td>
+            <td class="py-3.5 px-4 font-semibold text-slate-800">${formatNPR(item.price)}</td>
+            <td class="py-3.5 px-4">
+              <span class="px-2.5 py-1 rounded-full text-xs font-bold ${isLow ? 'bg-amber-100 text-amber-800' : 'bg-emerald-50 text-emerald-700'}">
+                ${item.qty} units
+              </span>
+            </td>
+            <td class="py-3.5 px-4 font-bold text-slate-900">${formatNPR(item.price * item.qty)}</td>
+            <td class="py-3.5 px-4 text-xs text-slate-600">${item.expiry}</td>
+            <td class="py-3.5 px-4 text-right space-x-1 whitespace-nowrap">
+              <button onclick="openEditModal(${item.id})" class="px-2.5 py-1 bg-blue-50 hover:bg-blue-600 hover:text-white text-blue-700 text-xs font-bold rounded-lg transition">Edit</button>
+              <button onclick="restockItem(${item.id}, 1)" class="px-2 py-1 bg-slate-100 hover:bg-agro-100 hover:text-agro-800 text-xs font-bold rounded-lg transition">+1</button>
+              <button onclick="restockItem(${item.id}, 5)" class="px-2 py-1 bg-agro-50 hover:bg-agro-700 hover:text-white text-agro-800 text-xs font-bold rounded-lg transition">+5</button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    };
+
+    window.restockItem = async function(id, addQty) {
+      const item = inventory.find(i => i.id === id);
+      if (item) {
+        item.qty += addQty;
+        renderInventory();
+        renderDashboard();
+        await persistShopState();
+        showToast(`Added +${addQty} units to ${item.name}`);
+      }
+    };
+
+    window.openAddModal = function() { document.getElementById("add-stock-modal").classList.remove("hidden"); };
+    window.closeAddModal = function() { document.getElementById("add-stock-modal").classList.add("hidden"); };
+
+    window.openEditModal = function(id) {
+      const item = inventory.find(i => i.id === id);
+      if (!item) return;
+      document.getElementById("edit-id").value = item.id;
+      document.getElementById("edit-name").value = item.name;
+      document.getElementById("edit-batch").value = item.batch;
+      document.getElementById("edit-expiry").value = item.expiry;
+      document.getElementById("edit-price").value = item.price;
+      document.getElementById("edit-qty").value = item.qty;
+      document.getElementById("edit-stock-modal").classList.remove("hidden");
+    };
+
+    window.closeEditModal = function() { document.getElementById("edit-stock-modal").classList.add("hidden"); };
+
+    window.saveEditedBatch = async function(e) {
+      e.preventDefault();
+      const id = Number(document.getElementById("edit-id").value);
+      const item = inventory.find(i => i.id === id);
+      if (item) {
+        item.name = document.getElementById("edit-name").value;
+        item.batch = document.getElementById("edit-batch").value;
+        item.expiry = document.getElementById("edit-expiry").value;
+        item.price = Number(document.getElementById("edit-price").value);
+        item.qty = Number(document.getElementById("edit-qty").value);
+        closeEditModal();
+        refreshAllViews();
+        await persistShopState();
+        showToast(`Updated ${item.name}`);
+      }
+    };
+
+    window.saveNewBatch = async function(e) {
+      e.preventDefault();
+      const newItem = {
+        id: Date.now(),
+        name: document.getElementById("new-name").value,
+        category: document.getElementById("new-category").value,
+        batch: document.getElementById("new-batch").value,
+        price: Number(document.getElementById("new-price").value),
+        qty: Number(document.getElementById("new-qty").value),
+        minQty: 10,
+        expiry: document.getElementById("new-expiry").value
+      };
+      inventory.unshift(newItem);
+      closeAddModal();
+      e.target.reset();
+      refreshAllViews();
+      await persistShopState();
+      showToast(`Added ${newItem.name} to KHATRI AgroVet stock`);
+    };
+
+    // POS Functions
+    window.renderPosGrid = function() {
+      const q = document.getElementById("pos-search").value.toLowerCase();
+      const grid = document.getElementById("pos-product-grid");
+      grid.innerHTML = inventory
+        .filter(i => i.name.toLowerCase().includes(q) || i.category.toLowerCase().includes(q))
+        .map(item => `
+          <button onclick="addToCart(${item.id})" ${item.qty === 0 ? 'disabled' : ''} class="text-left p-3.5 rounded-xl border border-slate-200 hover:border-agro-600 hover:bg-agro-50/40 transition flex flex-col justify-between disabled:opacity-40">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-agro-700">${item.category}</span>
+              <p class="text-sm font-bold text-slate-900 mt-0.5 line-clamp-1">${item.name}</p>
+            </div>
+            <div class="flex items-center justify-between mt-3 pt-2 border-t border-slate-100">
+              <span class="text-sm font-extrabold text-slate-900">${formatNPR(item.price)}</span>
+              <span class="text-xs font-medium ${item.qty <= item.minQty ? 'text-amber-600 font-bold' : 'text-slate-500'}">Stock: ${item.qty}</span>
+            </div>
+          </button>
+        `).join("");
+    };
+
+    window.addToCart = function(id) {
+      const item = inventory.find(i => i.id === id);
+      if (!item || item.qty <= 0) return;
+      const existing = cart.find(c => c.id === id);
+      if (existing) {
+        if (existing.qty < item.qty) existing.qty++;
+        else return showToast("Maximum available batch stock reached");
+      } else {
+        cart.push({ id: item.id, name: item.name, price: item.price, qty: 1 });
+      }
+      renderCart();
+    };
+
+    window.updateCartQty = function(id, delta) {
+      const idx = cart.findIndex(c => c.id === id);
+      if (idx === -1) return;
+      const invItem = inventory.find(i => i.id === id);
+      const nextQty = cart[idx].qty + delta;
+      if (nextQty <= 0) cart.splice(idx, 1);
+      else if (nextQty <= invItem.qty) cart[idx].qty = nextQty;
+      renderCart();
+    };
+
+    function renderCart() {
+      const container = document.getElementById("pos-cart-items");
+      if (cart.length === 0) {
+        container.innerHTML = `<p class="text-sm text-slate-400 text-center py-10">Tap products on the left to add to bill</p>`;
+        document.getElementById("pos-subtotal").textContent = "NPR 0";
+        document.getElementById("pos-grand-total").textContent = "NPR 0";
+        return;
+      }
+      let total = 0;
+      container.innerHTML = cart.map(c => {
+        const lineTotal = c.price * c.qty;
+        total += lineTotal;
+        return `
+          <div class="flex items-center justify-between gap-2 bg-slate-50 p-2.5 rounded-lg">
+            <div class="min-w-0">
+              <p class="text-xs font-bold text-slate-900 truncate">${c.name}</p>
+              <p class="text-[11px] text-slate-500">${formatNPR(c.price)} × ${c.qty}</p>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button onclick="updateCartQty(${c.id}, -1)" class="w-6 h-6 rounded bg-white border border-slate-300 text-xs font-bold">-</button>
+              <span class="text-xs font-bold w-5 text-center">${c.qty}</span>
+              <button onclick="updateCartQty(${c.id}, 1)" class="w-6 h-6 rounded bg-white border border-slate-300 text-xs font-bold">+</button>
+              <span class="text-xs font-extrabold text-slate-900 w-20 text-right">${formatNPR(lineTotal)}</span>
+            </div>
+          </div>
+        `;
+      }).join("");
+      document.getElementById("pos-subtotal").textContent = formatNPR(total);
+      document.getElementById("pos-grand-total").textContent = formatNPR(total);
+    }
+
+    window.checkoutBill = async function() {
+      if (cart.length === 0) return showToast("Add at least one item to generate bill");
+      let billTotal = 0;
+      const summaryNames = [];
+      cart.forEach(c => {
+        const inv = inventory.find(i => i.id === c.id);
+        if (inv) inv.qty -= c.qty;
+        billTotal += c.price * c.qty;
+        summaryNames.push(`${c.qty}x ${c.name}`);
+      });
+
+      const mode = document.getElementById("pos-payment-mode").value;
+      const farmerName = document.getElementById("pos-customer-name").value.trim() || "Walk-in Farmer";
+      const farmerPhone = document.getElementById("pos-customer-phone").value.trim() || "98XXXXXXXX";
+
+      if (mode === "Cash") {
+        dailyStats.cashSales += billTotal;
+      } else if (mode === "eSewa / Fonepay QR") {
+        dailyStats.qrSales += billTotal;
+      } else if (mode === "Udhaar (Credit)") {
+        dailyStats.udhaarSales += billTotal;
+        const existingFarmer = udhaarLedger.find(u => u.farmer.toLowerCase() === farmerName.toLowerCase());
+        if (existingFarmer) {
+          existingFarmer.amount += billTotal;
+          existingFarmer.items += `, ${summaryNames.join(", ")}`;
+        } else {
+          udhaarLedger.unshift({
+            id: Date.now(),
+            farmer: farmerName,
+            phone: farmerPhone,
+            village: "Bheriganga, Surkhet",
+            amount: billTotal,
+            items: summaryNames.join(", "),
+            dueDate: "2026-12-30"
+          });
+        }
+      }
+
+      dailyStats.billCount++;
+      dailyStats.nextBillNum++;
+      cart = [];
+      renderCart();
+      refreshAllViews();
+      await persistShopState();
+      showToast(`Bill settled (${formatNPR(billTotal)}) via ${mode}`);
+    };
+
+    // Udhaar & Advisory Functions
+    window.renderFarmers = function() {
+      const totalDue = udhaarLedger.reduce((s, u) => s + u.amount, 0);
+      document.getElementById("ledger-badge-total").textContent = `Due: ${formatNPR(totalDue)}`;
+
+      document.getElementById("udhaar-list").innerHTML = udhaarLedger.map(u => `
+        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <p class="text-sm font-bold text-slate-900">${u.farmer}</p>
+              <span class="text-[11px] text-slate-500">(${u.village}${u.phone ? ` • ${u.phone}` : ''})</span>
+            </div>
+            <p class="text-xs text-slate-600 mt-0.5">${u.items}</p>
+            <p class="text-[11px] text-rose-600 font-semibold mt-1">Due Date: ${u.dueDate}</p>
+          </div>
+          <div class="flex items-center gap-2 self-end sm:self-center">
+            <span class="text-sm font-extrabold text-rose-700 mr-1">${formatNPR(u.amount)}</span>
+            <button onclick="partialUdhaar(${u.id}, 1000)" class="px-2.5 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold rounded-lg transition">-1,000</button>
+            <button onclick="settleUdhaar(${u.id})" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg transition">
+              Full Paid
+            </button>
+          </div>
+        </div>
+      `).join("") || `<p class="text-sm text-slate-400 text-center py-6">No pending farmer credit balances.</p>`;
+
+      document.getElementById("advisory-list").innerHTML = advisoryLogs.map(a => `
+        <div class="p-3.5 rounded-xl border border-slate-200 bg-white">
+          <div class="flex justify-between text-xs font-bold text-agro-800">
+            <span>${a.farmer}</span>
+            <span class="text-slate-400 font-normal">${a.date}</span>
+          </div>
+          <p class="text-xs font-semibold text-slate-800 mt-1">Issue: ${a.issue}</p>
+          <p class="text-xs text-slate-600 mt-0.5">Advice: ${a.rx}</p>
+        </div>
+      `).join("");
+    };
+
+    window.partialUdhaar = async function(id, paidAmt) {
+      const idx = udhaarLedger.findIndex(u => u.id === id);
+      if (idx === -1) return;
+      const entry = udhaarLedger[idx];
+      const actualPaid = Math.min(entry.amount, paidAmt);
+      entry.amount -= actualPaid;
+      dailyStats.cashSales += actualPaid;
+      if (entry.amount <= 0) udhaarLedger.splice(idx, 1);
+      refreshAllViews();
+      await persistShopState();
+      showToast(`Received ${formatNPR(actualPaid)} partial payment from ${entry.farmer}`);
+    };
+
+    window.settleUdhaar = async function(id) {
+      const idx = udhaarLedger.findIndex(u => u.id === id);
+      if (idx !== -1) {
+        const settled = udhaarLedger.splice(idx, 1)[0];
+        dailyStats.cashSales += settled.amount;
+        refreshAllViews();
+        await persistShopState();
+        showToast(`Cleared ${formatNPR(settled.amount)} Udhaar for ${settled.farmer}`);
+      }
+    };
+
+    window.addAdvisoryNote = async function(e) {
+      e.preventDefault();
+      advisoryLogs.unshift({
+        farmer: document.getElementById("adv-farmer").value,
+        issue: document.getElementById("adv-issue").value,
+        rx: document.getElementById("adv-rx").value,
+        date: "Just now"
+      });
+      e.target.reset();
+      renderFarmers();
+      await persistShopState();
+      showToast("Farmer advisory note saved & synced");
+    };
+
+    // Initialize Views & Live Cloud Sync on load
+    refreshAllViews();
+    initCloudSync();
+  </script>
+</body>
+</html>
